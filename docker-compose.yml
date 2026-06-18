@@ -21,5 +21,26 @@ services:
       timeout: 5s
       retries: 5
 
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: vacation_rental_web
+    restart: unless-stopped
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+      DB_NAME: vacation_rental_db
+      DB_USER: vacation_user
+      DB_PASSWORD: vacation_pass123
+      DB_HOST: db
+      DB_PORT: 5432
+    depends_on:
+      db:
+        condition: service_healthy
+
 volumes:
   postgres_data:
