@@ -29,6 +29,7 @@ class LocationAdmin(admin.GISModelAdmin):
     search_fields = ['name', 'city', 'country']
     prepopulated_fields = {'slug': ('name',)}
     ordering = ['name']
+    readonly_fields = ['embedding']  # AI generated, not editable from admin
 
 
 @admin.register(Property)
@@ -41,6 +42,7 @@ class PropertyAdmin(admin.GISModelAdmin):
     ordering = ['-created_at']
     inlines = [PropertyImageInline]
     list_editable = ['is_featured', 'is_active']
+    readonly_fields = ['embedding']  # AI generated, not editable from admin
 
 
 @admin.register(PropertyImage)
@@ -50,6 +52,7 @@ class PropertyImageAdmin(admin.ModelAdmin):
     list_filter = ['is_primary']
     search_fields = ['property__title', 'alt_text']
     ordering = ['property', 'sort_order']
+    readonly_fields = ['embedding']  # AI generated, not editable from admin
 
     def image_preview(self, obj):
         """Show a small thumbnail of the image in admin list view."""
