@@ -1,0 +1,16 @@
+title,description,property_type,status,price,bedrooms,bathrooms,area_sqft,address,city,state,country,latitude,longitude
+Sea View Villa,Beautiful villa with direct sea view and private pool,villa,active,250.00,4,3,3200.00,123 Beach Road,Cox's Bazar,Chittagong,Bangladesh,21.4272,92.0058
+Cozy Mountain Cabin,Peaceful cabin surrounded by hills and nature,cabin,active,85.00,2,1,900.00,45 Hill Track Road,Bandarban,Chittagong,Bangladesh,22.1953,92.2184
+City Center Apartment,Modern apartment in the heart of Dhaka city,apartment,active,120.00,3,2,1400.00,10 Gulshan Avenue,Dhaka,Dhaka,Bangladesh,23.7808,90.4147
+Lakeside Cottage,Quiet cottage next to a beautiful lake,cottage,active,95.00,2,1,1100.00,7 Lake Drive,Sylhet,Sylhet,Bangladesh,24.8949,91.8687
+Luxury Penthouse,Top floor penthouse with city panorama view,apartment,active,350.00,5,4,4500.00,88 Banani Road,Dhaka,Dhaka,Bangladesh,23.7937,90.4066
+Forest Hideaway Cabin,Hidden cabin deep inside the forest,cabin,active,75.00,1,1,700.00,12 Forest Lane,Rangamati,Chittagong,Bangladesh,22.6430,92.1990
+Beachfront Studio,Small cozy studio right on the beach,studio,active,60.00,1,1,500.00,55 Marine Drive,Cox's Bazar,Chittagong,Bangladesh,21.4536,92.0172
+Heritage Haveli House,Old style heritage house with large garden,house,active,180.00,6,4,5000.00,3 Old Town Street,Panam Nagar,Dhaka,Bangladesh,23.6273,90.5590
+Modern Condo Downtown,Fully furnished condo near shopping mall,condo,active,140.00,2,2,1200.00,22 Mirpur Road,Dhaka,Dhaka,Bangladesh,23.8041,90.3666
+Riverside Bungalow,Lovely bungalow sitting right by the river,house,active,110.00,3,2,1800.00,9 River Bank Road,Barisal,Barisal,Bangladesh,22.7010,90.3535
+Hilltop Villa,Stunning villa on top of a green hill,villa,active,220.00,4,3,2800.00,1 Hilltop View,Khagrachhari,Chittagong,Bangladesh,23.1193,91.9847
+Budget Studio Flat,Clean and affordable studio for solo travelers,studio,active,40.00,1,1,400.00,67 New Market Area,Chittagong,Chittagong,Bangladesh,22.3569,91.7832
+Family Villa Sylhet,Spacious family villa with garden and BBQ area,villa,active,195.00,5,3,3500.00,14 Tea Garden Road,Sylhet,Sylhet,Bangladesh,24.9045,91.8611
+Eco Bamboo House,Eco friendly bamboo house inside green forest,house,active,70.00,2,1,800.00,30 Eco Park Road,Srimangal,Sylhet,Bangladesh,24.3063,91.7317
+Luxury Beach Resort Room,Premium room inside a luxury beach resort,other,active,300.00,2,2,1600.00,100 Resort Boulevard,Cox's Bazar,Chittagong,Bangladesh,21.4125,92.0523

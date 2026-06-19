@@ -130,7 +130,7 @@ class Property(models.Model):
 
     def save(self, *args, **kwargs):
         # Auto generate slug from title if not given
-        if not self.sulg:
+        if not self.slug:
             self.slug = slugify(self.title)
         super().save(*args, **kwargs)
 
