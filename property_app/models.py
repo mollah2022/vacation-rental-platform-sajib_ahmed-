@@ -1,6 +1,6 @@
 from django.contrib.gis.db import models
 from django.utils.text import slugify
-from pgvector.django import VectorField
+from pgvector.django import VectorField, HnswIndex
 
 
 class Location(models.Model):
@@ -23,6 +23,15 @@ class Location(models.Model):
         ordering = ['name']
         verbose_name = 'Location'
         verbose_name_plural = 'Locations'
+        indexes = [
+            HnswIndex(
+                name='location_embedding_hnsw_idx',
+                fields=['embedding'],
+                m=16,
+                ef_construction=64,
+                opclasses=['vector_cosine_ops']
+            )
+        ]
 
     def __str__(self):
         return f"{self.name}, {self.city}, {self.country}"
