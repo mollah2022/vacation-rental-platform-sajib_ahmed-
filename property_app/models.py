@@ -14,7 +14,7 @@ class Location(models.Model):
     address = models.TextField(blank=True)
     point = models.PointField(geography=True, srid=4326, null=True, blank=True)
     boundary = models.MultiPolygonField(srid=4326, null=True, blank=True)
-    embedding = VectorField(dimensions=1536, null=True, blank=True)
+    embedding = VectorField(dimensions=384, null=True, blank=True)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
