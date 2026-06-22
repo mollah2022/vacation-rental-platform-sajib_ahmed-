@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block title %}Vacation Rentals - Find Your Perfect Stay{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <h1>Find Your Perfect Vacation Rental</h1>
+                <p>Discover amazing properties across Bangladesh and beyond</p>
+            </div>
+            <div class="col-lg-6">
+                <!-- Search Form -->
+                <div class="search-form">
+                    <form action="{% url 'property_list' %}" method="GET">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold text-dark">Where do you want to go?</label>
+                            <input type="text" name="search" class="form-control"
+                                placeholder="Search by city, country or property name..."
+                                value="{{ request.GET.search }}">
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <label class="form-label fw-bold text-dark">Property Type</label>
+                                <select name="property_type" class="form-control">
+                                    <option value="">All Types</option>
+                                    {% for value, label in property_types %}
+                                    <option value="{{ value }}">{{ label }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label fw-bold text-dark">Bedrooms</label>
+                                <select name="bedrooms" class="form-control">
+                                    <option value="">Any</option>
+                                    <option value="1">1+</option>
+                                    <option value="2">2+</option>
+                                    <option value="3">3+</option>
+                                    <option value="4">4+</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-search">
+                            <i class="fas fa-search me-2"></i>Search Properties
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Properties -->
+{% if featured_properties %}
+<section class="py-5">
+    <div class="container">
+        <h2 class="fw-bold mb-4">Featured Properties</h2>
+        <div class="row g-4">
+            {% for property in featured_properties %}
+            <div class="col-md-6 col-lg-4">
+                <div class="property-card">
+                    {% with property.images.first as img %}
+                    {% if img %}
+                    <img src="{{ img.image.url }}" alt="{{ property.title }}">
+                    {% else %}
+                    <div class="no-image"><i class="fas fa-home"></i></div>
+                    {% endif %}
+                    {% endwith %}
+                    <div class="card-body">
+                        <span class="badge-type">{{ property.get_property_type_display }}</span>
+                        <h5 class="mt-2 mb-1">{{ property.title }}</h5>
+                        <p class="location mb-2">
+                            <i class="fas fa-map-marker-alt me-1"></i>
+                            {{ property.location.city }}, {{ property.location.country }}
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="price">${{ property.price }}<span>/night</span></div>
+                            <div class="text-muted small">
+                                <i class="fas fa-bed me-1"></i>{{ property.bedrooms }}
+                                <i class="fas fa-bath ms-2 me-1"></i>{{ property.bathrooms }}
+                            </div>
+                        </div>
+                        <a href="{% url 'property_detail' property.slug %}" class="btn btn-outline-primary btn-sm mt-3 w-100">View Details</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Recent Properties -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="fw-bold mb-4">Recent Properties</h2>
+        <div class="row g-4">
+            {% for property in recent_properties %}
+            <div class="col-md-6 col-lg-3">
+                <div class="property-card">
+                    {% with property.images.first as img %}
+                    {% if img %}
+                    <img src="{{ img.image.url }}" alt="{{ property.title }}">
+                    {% else %}
+                    <div class="no-image"><i class="fas fa-home"></i></div>
+                    {% endif %}
+                    {% endwith %}
+                    <div class="card-body">
+                        <span class="badge-type">{{ property.get_property_type_display }}</span>
+                        <h5 class="mt-2 mb-1 fs-6">{{ property.title }}</h5>
+                        <p class="location mb-2">
+                            <i class="fas fa-map-marker-alt me-1"></i>
+                            {{ property.location.city }}
+                        </p>
+                        <div class="price">${{ property.price }}<span>/night</span></div>
+                        <a href="{% url 'property_detail' property.slug %}" class="btn btn-outline-primary btn-sm mt-2 w-100">View</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-4">
+            <a href="{% url 'property_list' %}" class="btn btn-primary px-5">View All Properties</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
