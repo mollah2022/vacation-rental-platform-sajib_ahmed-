@@ -22,6 +22,7 @@ def home(request):
         'featured_properties': featured_properties,
         'recent_properties': recent_properties,
         'locations': locations,
+        'property_types': Property.PROPERTY_TYPE_CHOICES,
     }
     return render(request, 'property_app/home.html', context)
 
