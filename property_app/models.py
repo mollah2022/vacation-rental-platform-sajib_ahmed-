@@ -95,7 +95,7 @@ class Property(models.Model):
         super().save(*args, **kwargs)
 
 
-class PropertyImage(models.Model):
+class PropertyImage(models.Model): 
     """Store images for each property. One property can have many images."""
 
     property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name='images')
