@@ -7,3 +7,4 @@ django-filter==24.2
 pandas==2.2.2
 python-decouple==3.8
 sentence-transformers==2.7.0
+requests==2.31.0
