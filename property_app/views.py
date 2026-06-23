@@ -65,6 +65,28 @@ def property_list(request):
     if bedrooms:
         properties = properties.filter(bedrooms__gte=bedrooms)
 
+
+    # Location-based radius search — find properties within 50km of searched location
+    if search:
+        from django.contrib.gis.geos import Point
+        from django.contrib.gis.measure import D
+        from django.contrib.gis.db.models.functions import Distance
+
+        # Try to find a location matching the search query
+        matching_location = Location.objects.filter(
+            django_models.Q(city__icontains=search) |
+            django_models.Q(name__icontains=search) |
+            django_models.Q(country__icontains=search)
+        ).filter(point__isnull=False).first()
+
+        if matching_location and matching_location.point:
+            # Annotate each property with distance from matched location
+            properties = properties.filter(
+                point__isnull=False
+            ).annotate(
+                distance=Distance('point', matching_location.point)
+            ).order_by('distance')
+
     # Pagination — 6 properties per page
     paginator = Paginator(properties, 6)
     page_number = request.GET.get('page')
