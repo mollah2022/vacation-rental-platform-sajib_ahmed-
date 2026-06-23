@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
 from django.contrib.gis.geos import Point
 from django.contrib.gis.measure import D
+from django.db import models as django_models
 from django.contrib.gis.db.models.functions import Distance
 from .models import Location, Property, PropertyImage
 
@@ -31,15 +32,19 @@ def property_list(request):
     """Property listing page with search, filter and pagination."""
     properties = Property.objects.filter(is_active=True).select_related('location')
 
-    # Search by city or country
+
+    # Search by city, country or property name (combined text + semantic search)
     search = request.GET.get('search', '')
     if search:
+        from .services import combined_location_search
+
+        # Get matching locations using combined search (text + semantic)
+        matched_locations = combined_location_search(search, limit=20)
+
+        # Filter properties by matched locations OR by title
         properties = properties.filter(
-            location__city__icontains=search
-        ) | properties.filter(
-            location__country__icontains=search
-        ) | properties.filter(
-            title__icontains=search
+            django_models.Q(location__in=matched_locations) |
+            django_models.Q(title__icontains=search)
         )
 
     # Filter by property type
