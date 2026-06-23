@@ -54,6 +54,12 @@ docker compose run --rm web python data/import_properties.py
 docker compose run --rm web python manage.py set_location_points
 ```
 
+### 8. Generate AI embeddings for locations
+
+```bash
+docker compose run --rm web python manage.py generate_location_embeddings
+```
+
 ---
 
 ## Available URLs
