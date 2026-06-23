@@ -22,7 +22,7 @@ class Command(BaseCommand):
 
         for location in locations:
             # Build text to embed — combine name, city, state, country
-            text = f"{location.name} {location.city} {location.state} {location.country}"
+            text = f"{location.name} {location.city} {location.state} {location.country} {location.description}"
             text = text.strip()
 
             # Generate 384-dimension vector from text

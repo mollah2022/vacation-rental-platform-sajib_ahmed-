@@ -12,6 +12,7 @@ class Location(models.Model):
     state = models.CharField(max_length=100, blank=True)
     city = models.CharField(max_length=100)
     address = models.TextField(blank=True)
+    description = models.TextField(blank=True)  
     point = models.PointField(geography=True, srid=4326, null=True, blank=True)
     boundary = models.MultiPolygonField(srid=4326, null=True, blank=True)
     embedding = VectorField(dimensions=384, null=True, blank=True)
