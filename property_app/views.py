@@ -5,6 +5,9 @@ from django.contrib.gis.measure import D
 from django.db import models as django_models
 from django.contrib.gis.db.models.functions import Distance
 from .models import Location, Property, PropertyImage
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .serializers import LocationAutocompleteSerializer
 
 
 def home(request):
@@ -111,3 +114,24 @@ def property_detail(request, slug):
         'similar_properties': similar_properties,
     }
     return render(request, 'property_app/property_detail.html', context)
+
+
+@api_view(['GET'])
+def location_autocomplete(request):
+    """
+    API endpoint for location autocomplete using semantic search.
+    Usage: /api/locations/autocomplete/?q=beach
+    Returns top 5 matching locations as JSON.
+    """
+    query = request.GET.get('q', '').strip()
+
+    # Return empty list if query is too short
+    if len(query) < 2:
+        return Response([])
+
+    from .services import combined_location_search
+    locations = combined_location_search(query, limit=5)
+
+    serializer = LocationAutocompleteSerializer(locations, many=True)
+    return Response(serializer.data)
+
