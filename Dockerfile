@@ -15,7 +15,10 @@ ENV GEOS_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/libgeos_c.so
 WORKDIR /app
 
 COPY requirements.txt .
-RUN pip install --no-cache-dir --timeout=300 -r requirements.txt
+# Install CPU-only PyTorch first to avoid downloading full CUDA libraries
+RUN pip install --upgrade pip setuptools wheel && \
+    pip install torch --index-url https://download.pytorch.org/whl/cpu && \
+    pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
