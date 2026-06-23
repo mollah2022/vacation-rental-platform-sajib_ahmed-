@@ -1,3 +1,4 @@
+from django.db import models as django_models
 from sentence_transformers import SentenceTransformer
 from pgvector.django import CosineDistance
 from .models import Location
@@ -44,3 +45,44 @@ def semantic_location_search(query_text, limit=10):
     ).order_by('similarity')[:limit]
 
     return locations
+
+def combined_location_search(query_text, limit=10):
+    """
+    Combine normal text search + semantic search for better results.
+    Strategy:
+     First try exact/partial text match (fast, precise)
+     Then add semantic similar results (AI-powered, finds related locations)
+     Merge both results, remove duplicates
+    """
+    if not query_text or not query_text.strip():
+        return Location.objects.filter(is_active=True)
+
+    # Normal text search — exact city/country name match
+    text_results = Location.objects.filter(
+        is_active=True
+    ).filter(
+        django_models.Q(name__icontains=query_text) |
+        django_models.Q(city__icontains=query_text) |
+        django_models.Q(country__icontains=query_text) |
+        django_models.Q(state__icontains=query_text)
+    )
+
+    # Semantic search — AI finds related locations
+    semantic_results = semantic_location_search(query_text, limit=limit)
+
+    # Collect IDs from both searches
+    text_ids = list(text_results.values_list('id', flat=True))
+    semantic_ids = list(semantic_results.values_list('id', flat=True))
+
+    # Merge IDs — text results first (more precise), then semantic
+    combined_ids = text_ids.copy()
+    for sid in semantic_ids:
+        if sid not in combined_ids:
+            combined_ids.append(sid)
+
+    combined_ids = combined_ids[:limit]
+
+    # Return locations in merged order
+    locations = Location.objects.filter(id__in=combined_ids, is_active=True)
+    return locations
+
