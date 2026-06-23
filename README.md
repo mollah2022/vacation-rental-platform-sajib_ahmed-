@@ -48,10 +48,10 @@ docker compose run --rm web python manage.py createsuperuser
 docker compose run --rm web python data/import_properties.py
 ```
 
-### 7. Generate AI embeddings for locations
+### 7. Set GPS coordinates for locations
 
 ```bash
-docker compose run --rm web python manage.py generate_location_embeddings
+docker compose run --rm web python manage.py set_location_points
 ```
 
 ---
